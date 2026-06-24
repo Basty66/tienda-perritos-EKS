@@ -78,40 +78,31 @@ jobs:
             --name $EKS_CLUSTER_NAME
           kubectl config current-context
 
-      # ---------- Aplicar manifests base ----------
-      - name: Aplicar manifests base (namespace, DB, servicios)
+      # ---------- Aplicar todos los manifests ----------
+      - name: Aplicar manifests a EKS
         env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/mysql-secret.yaml -n $EKS_NAMESPACE
           kubectl apply -f k8s/mysql-deployment.yaml -n $EKS_NAMESPACE
           kubectl apply -f k8s/mysql-service.yaml -n $EKS_NAMESPACE
-
-      # ---------- Actualizar BACKEND en EKS ----------
-      - name: Actualizar BACKEND en EKS
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
-        run: |
           kubectl apply -f k8s/backend-deployment.yaml -n $EKS_NAMESPACE
           kubectl apply -f k8s/backend-service.yaml -n $EKS_NAMESPACE
-          kubectl set image deployment/tienda-backend \
-            backend=$ECR_REGISTRY/${ECR_REPO_BACKEND}:${IMAGE_TAG} \
-            -n $EKS_NAMESPACE
-          kubectl rollout status deployment/tienda-backend -n $EKS_NAMESPACE
+          kubectl apply -f k8s/frontend-deployment.yaml -n $EKS_NAMESPACE
+          kubectl apply -f k8s/frontend-service.yaml -n $EKS_NAMESPACE || true
 
-      # ---------- Actualizar FRONTEND en EKS ----------
-      - name: Actualizar FRONTEND en EKS
+      # ---------- Actualizar imágenes ----------
+      - name: Actualizar imágenes y esperar rollout
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           EKS_NAMESPACE: ${{ secrets.EKS_NAMESPACE }}
         run: |
-          kubectl apply -f k8s/frontend-deployment.yaml -n $EKS_NAMESPACE
-          kubectl apply -f k8s/frontend-service.yaml -n $EKS_NAMESPACE
-          kubectl set image deployment/tienda-frontend \
-            frontend=$ECR_REGISTRY/${ECR_REPO_FRONTEND}:${IMAGE_TAG} \
-            -n $EKS_NAMESPACE
+          kubectl set image deployment/tienda-db mysql=$ECR_REGISTRY/${ECR_REPO_DB}:${IMAGE_TAG} -n $EKS_NAMESPACE || true
+          kubectl set image deployment/tienda-backend backend=$ECR_REGISTRY/${ECR_REPO_BACKEND}:${IMAGE_TAG} -n $EKS_NAMESPACE || true
+          kubectl set image deployment/tienda-frontend frontend=$ECR_REGISTRY/${ECR_REPO_FRONTEND}:${IMAGE_TAG} -n $EKS_NAMESPACE || true
+          kubectl rollout status deployment/tienda-backend -n $EKS_NAMESPACE
           kubectl rollout status deployment/tienda-frontend -n $EKS_NAMESPACE
 
       # ---------- HPA (si existen los YAML) ----------
