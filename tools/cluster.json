@@ -1,0 +1,14 @@
+{
+  "name": "tienda-perritos",
+  "roleArn": "arn:aws:iam::113871699631:role/c212772a5382393l15678027t1w113871-LabEksClusterRole-0St3cg2SsrTq",
+  "resourcesVpcConfig": {
+    "subnetIds": [
+      "subnet-05c2daedf07a11a26",
+      "subnet-0261a61ef4a7e3788",
+      "subnet-098ba72736ce1b505",
+      "subnet-08c4f18d07bebb82b",
+      "subnet-01088131ae3e531b2"
+    ]
+  },
+  "version": "1.31"
+}
