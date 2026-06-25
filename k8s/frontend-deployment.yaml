@@ -16,6 +16,7 @@ spec:
       containers:
         - name: frontend
           image: {{ECR_URL}}/tienda-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 
