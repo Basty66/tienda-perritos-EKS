@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2026-06-24T22:00:00.000Z" agent="Mozilla/5.0" version="24.2.5">
+  <diagram id="arch-diagram" name="Architecture">
+    <mxGraphModel dx="1420" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="Arquitectura CI/CD - Tienda Perritos" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1B3A5C;" vertex="1" parent="1">
+          <mxGeometry x="320" y="10" width="460" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- DEVELOPER -->
+        <mxCell id="dev" value="Desarrollador" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6366F1;fontColor=#FFFFFF;strokeColor=#4F46E5;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="devIcon" value="👨‍💻" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="70" y="70" width="60" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ARROW 1 -->
+        <mxCell id="arrow1" value="git push" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6366F1;strokeWidth=2;fontSize=11;fontColor=#6366F1;endArrow=blockThin;" edge="1" parent="1" source="dev" target="github">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- GITHUB -->
+        <mxCell id="github" value="GitHub" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#18181B;fontColor=#FFFFFF;strokeColor=#000000;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="100" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="githubIcon" value="" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="295" y="75" width="50" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- GITHUB ACTIONS -->
+        <mxCell id="actions" value="GitHub Actions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2088FF;fontColor=#FFFFFF;strokeColor=#0366D6;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="190" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="actionsSteps" value="1. Checkout&#10;2. Login ECR&#10;3. Build Docker&#10;4. Test&#10;5. Push a ECR&#10;6. Deploy a EKS&#10;7. Verify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FE;fontColor=#1B3A5C;strokeColor=#2088FF;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="260" y="240" width="120" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- ARROW 2 -->
+        <mxCell id="arrow2" value="trigger" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2088FF;strokeWidth=2;fontSize=11;endArrow=blockThin;dashed=1;" edge="1" parent="1" source="github" target="actions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ECR -->
+        <mxCell id="ecr" value="Amazon ECR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9900;fontColor=#FFFFFF;strokeColor=#E88B00;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="190" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ecrRepos" value="tienda-frontend:085e86d&#10;tienda-backend:085e86d&#10;tienda-db:085e86d" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;fontColor=#663C00;strokeColor=#FF9900;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="240" width="130" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ARROW 3 -->
+        <mxCell id="arrow3" value="push images" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF9900;strokeWidth=2;fontSize=11;fontColor=#FF9900;endArrow=blockThin;" edge="1" parent="1" source="actions" target="ecr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- EKS CLUSTER -->
+        <mxCell id="eksBox" value="Amazon EKS - Cluster devopseks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ff0000;fontColor=#FFFFFF;strokeColor=#cc0000;fontSize=12;fontStyle=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="70" width="300" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="eksNamespace" value="Namespace: tienda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0E0;fontColor=#660000;strokeColor=#FF0000;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="100" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- MySQL -->
+        <mxCell id="mysqlPod" value="Pod MySQL&#10;1 replica" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00758F;fontColor=#FFFFFF;strokeColor=#005a6e;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="150" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mysqlSvc" value="Svc: tienda-db&#10;(ClusterIP:3306)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4E6F1;fontColor=#1A5276;strokeColor=#00758F;fontSize=9;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="195" width="100" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Backend -->
+        <mxCell id="backendPod" value="Pod Backend&#10;2 replicas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10B981;fontColor=#FFFFFF;strokeColor=#059669;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="860" y="150" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="backendHpa" value="HPA: CPU 70%&#10;2-10 replicas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A7F3D0;fontColor=#064E3B;strokeColor=#10B981;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="860" y="195" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="backendSvc" value="Svc: tienda-backend&#10;(ClusterIP:3001)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4E6F1;fontColor=#1A5276;strokeColor=#10B981;fontSize=9;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="230" width="100" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Frontend -->
+        <mxCell id="frontendPod" value="Pod Frontend&#10;2 replicas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3B82F6;fontColor=#FFFFFF;strokeColor=#2563EB;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="280" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="frontendHpa" value="HPA: CPU 60%&#10;2-6 replicas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BFDBFE;fontColor=#1E3A5F;strokeColor=#3B82F6;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="720" y="325" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="frontendSvc" value="Svc: tienda-frontend&#10;(LoadBalancer:80)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D4E6F1;fontColor=#1A5276;strokeColor=#3B82F6;fontSize=9;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="360" width="100" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ARROWS between K8s components -->
+        <mxCell id="k8sArrow1" value="" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666;strokeWidth=1;endArrow=blockThin;entryX=0;entryY=0.5;" edge="1" parent="1" source="backendSvc" target="mysqlSvc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="k8sArrow2" value="consulta DB" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666;strokeWidth=1;fontSize=9;fontColor=#666;endArrow=none;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="810" y="210" as="sourcePoint" />
+            <mxPoint x="860" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- LOAD BALANCER -->
+        <mxCell id="elb" value="Classic ELB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8B5CF6;fontColor=#FFFFFF;strokeColor=#7C3AED;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="120" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- USER -->
+        <mxCell id="user" value="Usuario" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EC4899;fontColor=#FFFFFF;strokeColor=#DB2777;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="userIcon" value="👤" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="70" y="370" width="60" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ARROW user -> ELB -> EKS -->
+        <mxCell id="arrow4" value="" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#EC4899;strokeWidth=2;endArrow=blockThin;" edge="1" parent="1" source="user" target="elb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5" value="http://app" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8B5CF6;strokeWidth=2;fontSize=11;fontColor=#8B5CF6;endArrow=blockThin;" edge="1" parent="1" source="elb" target="frontendSvc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ARROW ECR -> EKS -->
+        <mxCell id="arrow6" value="pull images" style="edgeStyle=roundedEdge;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF9900;strokeWidth=2;fontSize=11;fontColor=#FF9900;endArrow=blockThin;dashed=1;" edge="1" parent="1" source="ecr" target="eksBox">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- LEGEND -->
+        <mxCell id="legend" value="Leyenda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;fontColor=#1B3A5C;strokeColor=#CBD5E1;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1" value="🟢 Frontend (Nginx)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#3B82F6;" vertex="1" parent="1">
+          <mxGeometry x="50" y="515" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend2" value="🟢 Backend (Node.js)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#10B981;" vertex="1" parent="1">
+          <mxGeometry x="50" y="535" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend3" value="🔵 Base de Datos (MySQL)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#00758F;" vertex="1" parent="1">
+          <mxGeometry x="50" y="555" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend4" value="⬜ Servicio ClusterIP" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#1A5276;" vertex="1" parent="1">
+          <mxGeometry x="50" y="575" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend5" value="🟣 Load Balancer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#8B5CF6;" vertex="1" parent="1">
+          <mxGeometry x="50" y="595" width="180" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

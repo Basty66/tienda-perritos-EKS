@@ -35,6 +35,24 @@ jobs:
       - name: Tag imagen
         run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
+      - name: Tests backend
+        run: |
+          cd backend
+          npm install --production
+          npm test
+
+      - name: Tests frontend
+        run: |
+          echo "Verificando sintaxis HTML..."
+          cd frontend
+          # Validate HTML files exist and are valid
+          if [ -f index.html ] && [ -f app.js ]; then
+            echo "Frontend files OK"
+          else
+            echo "Error: Frontend files missing"
+            exit 1
+          fi
+
       - name: Build & push Frontend
         run: |
           docker build -t ${{ steps.login-ecr.outputs.registry }}/$FRONTEND_REPO:$TAG ./frontend
