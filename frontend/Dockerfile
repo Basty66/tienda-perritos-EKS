@@ -5,7 +5,6 @@ RUN apk add --no-cache curl
 # Stage 2: Production
 FROM nginx:alpine
 RUN apk add --no-cache curl && \
-    adduser -D -u 1001 -g 'nginx' nginx && \
     chown -R nginx:nginx /usr/share/nginx/html && \
     chmod -R 755 /usr/share/nginx/html && \
     rm -f /etc/nginx/conf.d/default.conf
